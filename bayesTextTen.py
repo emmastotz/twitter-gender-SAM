@@ -111,10 +111,11 @@ class BayesText:
                 #token = token.strip('\'".,?:-').lower()
                 token = token.lower()
                 if token in self.vocabulary:
-                    #print("TOKEN", token)
+                    print("TOKEN", token)
                     for category in self.categories:
-                        #if self.prob[category][token] != 0:
-                            #print("%s %s %f" % (category, token, self.prob[category][token]))
+                        if self.prob[category][token] != 0:
+                            print("%s %s %f" % (category, token, self.prob[category][token]))
+                        print(math.log(self.prob[category][token]))
                         results[category] += math.log(self.prob[category][token])
         f.close()
         results = list(results.items())
@@ -134,6 +135,11 @@ class BayesText:
                 total += 1
                 #print(file) #raz
                 result = self.classify(directory + file)
+                fileText = codecs.open(directory + file, 'r', 'iso8859-1')
+                for i in fileText:
+                    print(i)
+                print("Text:" + ":: Gender: " + category + ":: Result: " + result)
+                print("-----------------------------------------------------------")
                 if result == category:
                     correct += 1
                 #else:
